@@ -112,3 +112,77 @@ label {
   transform: scale(1.05); /* Apply zoom-in effect */
   transition: transform 0.3s ease; /* Add transition for smooth animation */
 }
+
+
+
+
+/* Pagination css */
+
+
+.next-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin-right: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.previous-button {
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+p{
+  margin-bottom: 10px;
+}
+
+
+/* Pagination container to hold the buttons */
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.paginationButton {
+  background-color: rgba(0, 123, 255, 0.5);
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 16px;
+  margin: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-right: 30px;
+  margin-left: 30px;
+}
+
+
+.paginationButton.active {
+  background-color: #0062cc;
+  color: #fff;
+}
+
+.progressBarContainer {
+  background-color: #dcdcdc;
+  height: 10px;
+  border-radius: 5px;
+  width: 400px;
+  margin: 0 auto;
+}
+
+
+.progressBar {
+  height: 100%;
+  background-color: #007bff;
+  border-radius: 5px;
+  width: calc(100% / 3 * var(--activeStep));
+  transition: width 0.3s ease;
+}
