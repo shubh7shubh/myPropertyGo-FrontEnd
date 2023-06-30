@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.bg {
+  background: linear-gradient(
+    101.42deg,
+    #275bc1 4.88%,
+    rgba(28, 84, 192, 0.79) 102.89%
+  );
+}
+
+.testibg {
+  background: linear-gradient(0deg, #e2f2ff, #e2f2ff), #ffffff;
+}
+
+.bd {
+  border: 2px solid rgba(169, 169, 169, 0.28);
+  border-radius: 16px;
+}
+
+.cover {
+  background: linear-gradient(
+    106.23deg,
+    rgba(64, 111, 202, 0.7) 0.46%,
+    rgba(11, 50, 125, 0.7) 97.31%
+  );
+}
+
+input[type="text"]:focus ~ .input-text,
+input[type="password"]:not(:placeholder-shown) ~ .input-text,
+input[type="text"]:not(:placeholder-shown) ~ .input-text {
+  @apply transform -translate-y-7 -translate-x-5 scale-75 opacity-100 text-lg;
+}
+
+
+
+
+
+.property-listing-form {
+  /* max-width: 400px; */
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f5f5f5;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.button.active {
+  background-color: rgb(51,100,197);
+  color: white;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.inputField {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.inputField:focus {
+  outline: none;
+  border-color: #888;
+}
+
+.inputField::placeholder {
+  color: #888;
+}
+
+.amenity-checkbox input[type="checkbox"] {
+  width: 25px;
+  height: 25px;
+  /* appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none; */
+  border: 1px solid #888;
+  border-radius: 4px;
+  /* outline: none; */
+  transition: background-color 0.3s ease-in-out;
+}
+
+.container{
+  width: 80%;
+}
+
+.imageContainer:hover {
+  transform: scale(1.05); /* Apply zoom-in effect */
+  transition: transform 0.3s ease; /* Add transition for smooth animation */
+}
