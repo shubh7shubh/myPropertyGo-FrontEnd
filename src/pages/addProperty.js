@@ -12,9 +12,14 @@ import {
   HiChevronDown,
   HiOutlineLocationMarker,
 } from "react-icons/hi";
-import { BsBuilding, BsFillHouseFill,BsShop } from "react-icons/bs";
+import { BsBuilding, BsFillHouseFill, BsShop } from "react-icons/bs";
 import { RiHome4Fill, RiBuilding4Fill } from "react-icons/ri";
-import { MdApartment,MdOutlineVilla,MdHome,MdWarehouse } from "react-icons/md";
+import {
+  MdApartment,
+  MdOutlineVilla,
+  MdHome,
+  MdWarehouse,
+} from "react-icons/md";
 // import { HiBuildingStorefront } from "react-icons/hi";
 import { GiIsland } from "react-icons/gi";
 import {
@@ -24,7 +29,13 @@ import {
   AiOutlineSetting,
   AiOutlineUser,
 } from "react-icons/ai";
-import { FaRegAddressBook, FaHome,FaBuilding,FaLandmark,FaWarehouse } from "react-icons/fa";
+import {
+  FaRegAddressBook,
+  FaHome,
+  FaBuilding,
+  FaLandmark,
+  FaWarehouse,
+} from "react-icons/fa";
 import {
   MdOutlineHolidayVillage,
   MdPhotoSizeSelectSmall,
@@ -34,8 +45,11 @@ import { useFetch } from "src/lib/hooks/useFetch";
 // import "../styles/addProperty.css"
 import { cx } from "../utills/all";
 import Image from "next/image";
+import { useCookies } from "react-cookie";
 
 const AddProperty = () => {
+  const [cookies] = useCookies(["jwtToken"]);
+
   const [saleActive, setSaleActive] = useState(true);
   const [rentActive, setRentActive] = useState(false);
   const [propertyProjectActive, setPropertyProjectActive] = useState(false);
@@ -442,6 +456,7 @@ const AddProperty = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "authorization": `Bearer ${cookies.jwtToken}`,
           },
           body: JSON.stringify(data),
         }
@@ -489,51 +504,64 @@ const AddProperty = () => {
   //   handleNext();
   // };
 
+
+  // 2C5FC3
+  // 2C5FC3
   return (
     <>
-      <div className=" mx-auto w-full lg:w-[900px] max-w-3xl  ">
+      <div style={{ backgroundColor: "white" }} className=" mx-auto w-full lg:w-[900px] max-w-3xl  ">
         {/* <p>Property Listing for</p> */}
         <div className="property-listing-form">
-        <div>
- 
-  <div className="paginationContainer">
-    <button
-      className={`paginationButton ${activeStep === 1 ? 'active' : ''}`}
-      onClick={() => handleStepClick(1)}
-    >
-      Property Details
-    </button>
-    <button
-      className={`paginationButton ${activeStep === 2 ? 'active' : ''}`}
-      onClick={() => handleStepClick(2)}
-    >
-     Additional Details
-    </button>
-    <button
-      className={`paginationButton ${activeStep === 3 ? 'active' : ''}`}
-      onClick={() => handleStepClick(3)}
-    >
-      Amenities
-    </button>
-  </div>
+          <div style={{ marginBottom: "20px", padding: "20px 0" }}>
+            <div className="paginationContainer">
+              <button
+                className={`paginationButton ${activeStep === 1 ? "active" : ""
+                  }`}
+                onClick={() => handleStepClick(1)}
+              >
+                <MdApartment style={{ fontSize: "25px" }} />  Property Details
+              </button>
+              <button
+                className={`paginationButton ${activeStep === 2 ? "active" : ""
+                  }`}
+                onClick={() => handleStepClick(2)}
+              >
+                <MdApartment style={{ fontSize: "25px" }} />   Additional Details
+              </button>
+              <button
+                className={`paginationButton ${activeStep === 3 ? "active" : ""
+                  }`}
+                onClick={() => handleStepClick(3)}
+              >
+                <MdApartment style={{ fontSize: "25px" }} />   Amenities
+              </button>
+            </div>
+
+            <div style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
+              <div className="progressBarContainer">
+                <div
+                  className="progressBar"
+                  style={{ "--activeStep": activeStep }}
+                ></div>
+              </div>
+
+              <div className="circleContainer">
+                <p style={{ margin: "0" }} className={`circle ${activeStep >= 2 ? "active" : ""}`}>1</p>
+
+                <p style={{ margin: "0" }} className={`circle ${activeStep === 3 ? "active" : ""}`}>2</p>
+
+                <p style={{ margin: "0" }} className={`circle`}>3</p>
+              </div>
+
+            </div>
 
 
-  <div className="progressBarContainer">
-    <div
-      className="progressBar"
-      style={{ '--activeStep': activeStep }}
-    ></div>
-  </div>
-
-</div>
 
 
 
 
 
-
-
-
+          </div>
 
           {activeStep === 1 && (
             <>
@@ -555,7 +583,7 @@ const AddProperty = () => {
                   onClick={() => handleToggle("property")}
                   className={`button ${isPropertyActive ? "active" : ""}`}
                 >
-                  Property
+                  <MdApartment style={{ marginRight: "5px", display: "inline-block", marginBottom: "5px" }} /> Property
                 </button>
 
                 <button
@@ -563,7 +591,7 @@ const AddProperty = () => {
                   onClick={() => handleToggle("project")}
                   className={`button ${isProjectActive ? "active" : ""}`}
                 >
-                  Project
+                  <BsBuilding style={{ marginRight: "5px", display: "inline-block", marginBottom: "5px" }} /> Project
                 </button>
 
                 <p style={{ marginBottom: "15px", marginTop: "15px" }}>
@@ -638,9 +666,8 @@ const AddProperty = () => {
                         key={index}
                         style={{ margin: "10px" }}
                         onClick={() => handleButtonClick(name)}
-                        className={`button ${
-                          activeButton === name ? "active" : ""
-                        }`}
+                        className={`button ${activeButton === name ? "active" : ""
+                          }`}
                       >
                         {Icon && (
                           <Icon
@@ -660,124 +687,196 @@ const AddProperty = () => {
               ) : (
                 <div className="propertyTypeContainer">
                   {commercialNames.map((name, index) => {
-                    const Icon = commercialIcons[index]; 
+                    const Icon = commercialIcons[index];
                     return (
                       <button
                         key={index}
                         style={{ margin: "10px" }}
                         onClick={() => handleButtonClick(name)}
-                        className={`button ${
-                          activeButton === name ? "active" : ""
-                        }`}
+                        className={`button ${activeButton === name ? "active" : ""
+                          }`}
                       >
-                        {Icon && <Icon     style={{
+                        {Icon && (
+                          <Icon
+                            style={{
                               display: "inline-block",
                               marginBottom: "5px",
                               marginRight: "5px",
                             }}
-                            className="icon"/>} {name}
+                            className="icon"
+                          />
+                        )}{" "}
+                        {name}
                       </button>
                     );
                   })}
                 </div>
               )}
 
-              <label htmlFor="city">City:</label>
-              <input
-                required
-                className="inputField"
-                type="text"
-                id="city"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-              />
-              <label htmlFor="price">Project/Building Name</label>
-              <input
-                required
-                className="inputField"
-                type="text"
-                id="name"
-                value={projectName}
-                onChange={(e) => setProjectName(e.target.value)}
-              />
-              <label htmlFor="price">Location</label>
-              <input
-                required
-                className="inputField"
-                type="text"
-                id="location"
-                value={locality}
-                onChange={(e) => setLocality(e.target.value)}
-              />
-              <label htmlFor="price">Locality Price</label>
-              <input
-                required
-                className="inputField"
-                type="text"
-                id="price"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-              />
-              <label htmlFor="price">BHK Configs</label>
-              <input
-                required
-                className="inputField"
-                type="text"
-                id="price"
-                value={bhkConfig}
-                onChange={(e) => setBhkConfig(e.target.value)}
-              />
-              <label htmlFor="area">Area</label>
-              <input
-                required
-                className="inputField"
-                type="text"
-                id="area"
-                value={area}
-                onChange={(e) => setArea(e.target.value)}
-              />
-              <label htmlFor="area">Area Value</label>
-              <input
-                required
-                className="inputField"
-                type="text"
-                id="area"
-                value={areaValue}
-                onChange={(e) => setAreaValue(e.target.value)}
-              />
-              <label htmlFor="area">Area Type</label>
-              <input
-                required
-                className="inputField"
-                type="text"
-                id="area"
-                value={areaType}
-                onChange={(e) => setAreaType(e.target.value)}
-              />
-              <label htmlFor="size">Size</label>
-              <input
-                required
-                className="inputField"
-                type="text"
-                id="size"
-                value={size}
-                onChange={(e) => setSize(e.target.value)}
-              />
-              <label htmlFor="address">Address</label>
-              <input
-                required
-                className="inputField"
-                type="text"
-                id="address"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-              />
+
+              <div style={{ margin: "20px 0" }}
+                className={`group bg-white focus-within:border-blue-500 border w-full space-x-4 flex justify-center items-center px-4 jj bd  `}
+              >
+                {/* <label style={{marginTop:"5px"}} htmlFor="city">City:</label> */}
+                <input
+                  placeholder="Enter City"
+                  required
+                  className="inputField"
+                  type="text"
+                  id="city"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                />
+
+
+              </div>
+
+
+              <div style={{ margin: "20px 0" }} className={`group bg-white focus-within:border-blue-500 border w-full space-x-4 flex justify-center items-center px-4 jj bd  `}>
+                {/* <label style={{marginTop:"5px"}}  htmlFor="price">Project Name</label> */}
+                <input
+                  placeholder="Enter Project/Building Name"
+                  required
+                  className="inputField"
+                  type="text"
+                  id="name"
+                  value={projectName}
+                  onChange={(e) => setProjectName(e.target.value)}
+                />
+
+              </div>
+
+
+              <div style={{ margin: "20px 0" }} className={`group bg-white focus-within:border-blue-500 border w-full space-x-4 flex justify-center items-center px-4 jj bd  `}>
+                {/* <label style={{marginTop:"5px"}}  htmlFor="price">Location</label> */}
+                <input
+                  placeholder="Enter Location"
+                  required
+                  className="inputField"
+                  type="text"
+                  id="location"
+                  value={locality}
+                  onChange={(e) => setLocality(e.target.value)}
+                />
+
+              </div>
+
+              <div style={{ margin: "20px 0" }} className={`group bg-white focus-within:border-blue-500 border w-full space-x-4 flex justify-center items-center px-4 jj bd  `}>
+                {/* <label style={{ marginTop: "5px" }} htmlFor="price">Locality Price</label> */}
+                <input
+                  placeholder="Enter Locality Price"
+                  required
+                  className="inputField"
+                  type="text"
+                  id="price"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                />
+
+
+
+              </div>
+
+              <div style={{ margin: "20px 0" }} className={`group bg-white focus-within:border-blue-500 border w-full space-x-4 flex justify-center items-center px-4 jj bd  `}>
+                {/* <label style={{ marginTop: "5px" }} htmlFor="price">BHK Configs</label> */}
+                <input
+                  placeholder="BHK Configs"
+                  required
+                  className="inputField"
+                  type="text"
+                  id="price"
+                  value={bhkConfig}
+                  onChange={(e) => setBhkConfig(e.target.value)}
+                />
+
+
+
+              </div>
+
+              <div style={{ margin: "20px 0" }} className={`group bg-white focus-within:border-blue-500 border w-full space-x-4 flex justify-center items-center px-4 jj bd  `}>
+
+                {/* <label style={{ marginTop: "5px" }} htmlFor="area">Area</label> */}
+                <input
+                  placeholder="Enter Area"
+                  required
+                  className="inputField"
+                  type="text"
+                  id="area"
+                  value={area}
+                  onChange={(e) => setArea(e.target.value)}
+                />
+
+
+              </div>
+
+              <div style={{ margin: "20px 0" }} className={`group bg-white focus-within:border-blue-500 border w-full space-x-4 flex justify-center items-center px-4 jj bd  `}>
+                {/* <label style={{ marginTop: "5px" }} htmlFor="area">Area Value</label> */}
+                <input
+                  placeholder="Enter Area Value"
+                  required
+                  className="inputField"
+                  type="text"
+                  id="area"
+                  value={areaValue}
+                  onChange={(e) => setAreaValue(e.target.value)}
+                />
+
+
+
+              </div>
+
+              <div style={{ margin: "20px 0" }} className={`group bg-white focus-within:border-blue-500 border w-full space-x-4 flex justify-center items-center px-4 jj bd  `}>
+
+                {/* <label style={{ marginTop: "5px" }} htmlFor="area">Area Type</label> */}
+                <input
+                  placeholder="Enter Area Type"
+                  required
+                  className="inputField"
+                  type="text"
+                  id="area"
+                  value={areaType}
+                  onChange={(e) => setAreaType(e.target.value)}
+                />
+
+
+              </div>
+
+              <div style={{ margin: "20px 0" }} className={`group bg-white focus-within:border-blue-500 border w-full space-x-4 flex justify-center items-center px-4 jj bd  `}>
+
+
+                {/* <label style={{ marginTop: "5px" }} htmlFor="size">Size</label> */}
+                <input
+                  placeholder="Enter Size"
+                  required
+                  className="inputField"
+                  type="text"
+                  id="size"
+                  value={size}
+                  onChange={(e) => setSize(e.target.value)}
+                />
+
+
+              </div>
+
+              <div style={{ margin: "20px 0" }} className={`group bg-white focus-within:border-blue-500 border w-full space-x-4 flex justify-center items-center px-4 jj bd  `}>
+                {/* <label style={{ marginTop: "5px" }} htmlFor="address">Address</label> */}
+                <input
+                  placeholder="Enter Address"
+                  required
+                  className="inputField"
+                  type="text"
+                  id="address"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                />
+
+              </div>
 
               <button
                 className="next-button"
                 onClick={handlePropertyDetailsSubmit}
               >
-                Save and Continue 1
+                Save and Continue
               </button>
             </>
           )}
@@ -837,9 +936,8 @@ const AddProperty = () => {
                     key={index}
                     style={{ margin: "10px" }}
                     onClick={() => handleAdditionalRoomClick(name)}
-                    className={`button ${
-                      addtionalRoomButton === name ? "active" : ""
-                    }`}
+                    className={`button ${addtionalRoomButton === name ? "active" : ""
+                      }`}
                   >
                     {name}
                   </button>
@@ -930,55 +1028,63 @@ const AddProperty = () => {
                 ))}
               </select>
 
-              <label htmlFor="floor">Floor No.</label>
-              <input
-                required
-                className="inputField"
-                type="text"
-                id="floor"
-                placeholder="Floor No."
-                value={floorNumber}
-                onChange={(e) => setFloorNumber(e.target.value)}
-              />
 
-              <label htmlFor="tower">Tower/Block</label>
-              <input
-                required
-                className="inputField"
-                type="text"
-                id="tower"
-                placeholder="Tower/Block"
-                value={tower}
-                onChange={(e) => setTower(e.target.value)}
-              />
+              <div style={{ margin: "20px 0" }} className={`group bg-white focus-within:border-blue-500 border w-full space-x-4 flex justify-center items-center px-4 jj bd  `}>
 
-              <label htmlFor="floorCount">Total Floor Count</label>
-              <input
-                required
-                className="inputField"
-                type="text"
-                id="floorCount"
-                placeholder="Total Floor Count"
-                value={floorCount}
-                onChange={(e) => setFloorCount(e.target.value)}
-              />
+                {/* <label htmlFor="floor">Floor No.</label> */}
+                <input
+                  required
+                  className="inputField"
+                  type="text"
+                  id="floor"
+                  placeholder="Floor No."
+                  value={floorNumber}
+                  onChange={(e) => setFloorNumber(e.target.value)}
+                />
+              </div>
+              <div style={{ margin: "20px 0" }} className={`group bg-white focus-within:border-blue-500 border w-full space-x-4 flex justify-center items-center px-4 jj bd  `}>
 
-              <label htmlFor="UnitNumber">Unit NO</label>
-              <input
-                required
-                className="inputField"
-                type="text"
-                id="unitNumber"
-                placeholder="Unit No"
-                value={unitNumber}
-                onChange={(e) => setUnitNumber(e.target.value)}
-              />
+                {/* <label htmlFor="tower">Tower/Block</label> */}
+                <input
+                  required
+                  className="inputField"
+                  type="text"
+                  id="tower"
+                  placeholder="Tower/Block"
+                  value={tower}
+                  onChange={(e) => setTower(e.target.value)}
+                />
+              </div>
+              <div style={{ margin: "20px 0" }} className={`group bg-white focus-within:border-blue-500 border w-full space-x-4 flex justify-center items-center px-4 jj bd  `}>
+                {/* <label htmlFor="floorCount">Total Floor Count</label> */}
+                <input
+                  required
+                  className="inputField"
+                  type="text"
+                  id="floorCount"
+                  placeholder="Total Floor Count"
+                  value={floorCount}
+                  onChange={(e) => setFloorCount(e.target.value)}
+                />
+              </div>
+              <div style={{ margin: "20px 0" }} className={`group bg-white focus-within:border-blue-500 border w-full space-x-4 flex justify-center items-center px-4 jj bd  `}>
+                {/* <label htmlFor="UnitNumber">Unit NO</label> */}
+                <input
+                  required
+                  className="inputField"
+                  type="text"
+                  id="unitNumber"
+                  placeholder="Unit No"
+                  value={unitNumber}
+                  onChange={(e) => setUnitNumber(e.target.value)}
+                />
+              </div>
 
               <button
                 className="next-button"
                 onClick={handlePropertyDetailsSubmit}
               >
-                Save and Continue 2
+                Save and Continue
               </button>
               <button className="previous-button" onClick={handlePrevious}>
                 Previous
@@ -1058,7 +1164,7 @@ const AddProperty = () => {
                   borderRadius: "10px",
                 }}
               >
-                Save & Continue
+                Submit
               </button>
 
               {/* <button className="next-button" onClick={handleAmenitiesSubmit}>
@@ -1114,7 +1220,7 @@ const AddProperty = () => {
                 )} */}
         </div>
         <div
-          style={{ marginTop: "500px" }}
+          style={{ marginTop: "700px" }}
           className="border-0 rounded-lg  relative flex flex-col w-full bg-white outline-none focus:outline-none"
         >
           {/*header*/}
@@ -1125,20 +1231,20 @@ const AddProperty = () => {
               <Input
                 Icon={AiOutlineUser}
                 placeholder="name"
-                //   value={name}
-                //   setValue={setName}
+              //   value={name}
+              //   setValue={setName}
               />
               <Input
                 Icon={AiOutlineDollar}
                 placeholder="price"
-                //   value={cost}
-                //   setValue={setCost}
+              //   value={cost}
+              //   setValue={setCost}
               />
               <Input
                 Icon={AiOutlineHome}
                 placeholder="BHK Config ie. 4"
-                //   value={BHKconfig}
-                //   setValue={setBHKConfig}
+              //   value={BHKconfig}
+              //   setValue={setBHKConfig}
               />
               <div className="flex items-center px-5  relative z-50 w-full border bd rounded-lg">
                 <MdOutlineHolidayVillage className="text-lg text-[#2C5FC3] " />
@@ -1184,14 +1290,14 @@ const AddProperty = () => {
               <Input
                 Icon={FaRegAddressBook}
                 placeholder="address"
-                //   value={adress}
-                //   setValue={setAdress}
+              //   value={adress}
+              //   setValue={setAdress}
               />
               <Input
                 Icon={MdPhotoSizeSelectSmall}
                 placeholder="size in Sqft"
-                //   value={size}
-                //   setValue={setSize}
+              //   value={size}
+              //   setValue={setSize}
               />
             </div>
             <textarea

@@ -19,7 +19,7 @@ const MediumHouseCard = ({
       <div className="min-w-[300px] md:min-w-[400px] relative max-w-sm grow  rounded-lg   font-manrope">
         <div className="relative h-64 mb-4">
           <Image
-            src={propertyImages[0]}
+           src={propertyImages[0] ? propertyImages[0] : "/bighouse.png"}
             fill
             alt="home"
             className="object-fill rounded-lg"

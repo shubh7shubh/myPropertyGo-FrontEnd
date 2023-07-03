@@ -7,13 +7,14 @@ import {
   Header,
   HomeSectionTitle,
   HouseCard,
-  MediumHouse,
+  // MediumHomeCard,
   PopularCity,
   Process,
   Stats,
   TestiMonials,
 } from "src/componets";
 import { HomeChip, homeChipsData } from "src/componets/Home/header";
+import MediumHouseCard from "src/componets/HousCard/MediumHomeCard";
 import Tour from "src/componets/Home/Tour";
 import { useFetch } from "src/lib/hooks/useFetch";
 import { Propery, ProperyRes, ProperyResArr } from "src/@types";
@@ -48,24 +49,56 @@ export default function Home() {
     "/property/getPropertiesByFeature"
   );
 
+
+
+
+
+
+  // console.log(sortedArray);
+
+
+  // const sortedArray = data?.result.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+
+  // console.log(sortedArray);
+
   console.log(featured, "featured");
   const [Filtred, setFiltred] = useState<Propery[] | null>([]);
+  const [featuredData, setFeaturedData] = useState<Propery[] | null>([]);
   const [propertyTypeFilter, setPropertyFilter] = useState<string>("all");
 
+
+
   useEffect(() => {
-    if (data?.result) {
-      setFiltred(data?.result);
+    console.log(data?.result,"result")
+    if (data && data.result) {
+   setFiltred(data.result)
     }
   }, [data]);
+  
+
+  // useEffect(() => {
+  //   if (data?.result) {
+  //     setFiltred(data?.result);
+  //     console.log(Filtred,"Filtreddddd")
+  //   }
+  // }, [data]);
+
+  useEffect(() => {
+    if (featured?.result) {
+      setFeaturedData(featured?.result);
+    }
+  }, [featured]);
+
+
 
   useEffect(() => {
     if (propertyTypeFilter == "all") {
-      if (data?.result) {
-        setFiltred(data?.result);
+      if (featured?.result) {
+        setFiltred(featured?.result);
       }
     } else {
       setFiltred((prev) => {
-        const arr = data?.result?.filter((p) => {
+        const arr = featured?.result?.filter((p) => {
           return p.propertyType == propertyTypeFilter;
         });
         return arr as Propery[];
@@ -144,9 +177,9 @@ export default function Home() {
           </div>
         </div>
 
-        <div>
+        <div >
           {Filtred?.length ? (
-            <CardCarousel id="house" data={Filtred} Card={HouseCard} />
+            <CardCarousel id="house" data={featuredData} Card={HouseCard} />
           ) : (
             <p className="text-lg py-4">
               No Property Found with PropertyType {propertyTypeFilter}
@@ -172,32 +205,31 @@ export default function Home() {
       <section className=" py-16">
         <div className="max-w-7xl mx-auto px-5 md:px-10 ">
           <div className="w-full flex items-center justify-between">
-            <HomeSectionTitle text="Featured House" />
+            <HomeSectionTitle text="Trending / Newly listed" />
             <div className="hidden md:flex space-x-4 ">
               <button
-                onClick={() => scrollLeft("house")}
+                onClick={() => scrollLeft("feat")}
                 className="p-2 m-2 rounded-full bg-white"
               >
                 <FiChevronLeft />
               </button>
               <button
-                onClick={() => scrollRight("house")}
+                onClick={() => scrollRight("feat")}
                 className="p-2 m-2 rounded-full bg-white"
               >
                 <FiChevronRight />
               </button>
             </div>
           </div>
-          {featured && (
+          {data && (
             <div
-              // style={{ border: "2px solid red" }}
               id="feat"
               className="flex overflow-hidden space-x-6 py-10"
             >
               <CardCarousel
                 id="feat"
-                data={featured.result}
-                Card={MediumHouse}
+                data={Filtred}
+                Card={MediumHouseCard}
               />
             </div>
           )}
@@ -214,3 +246,6 @@ export default function Home() {
 Home.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;
 };
+
+
+// var array = [{name:"sk",createdAt: "2023-07-01T13:50:05.375Z"},{name:"vk",createdAt: "2023-06-30T13:24:44.402Z"},{name:"ck",createdAt: "2023-07-01T13:50:05.377Z"},{name:"dk",createdAt: "2023-06-30T13:24:44.452Z"}]

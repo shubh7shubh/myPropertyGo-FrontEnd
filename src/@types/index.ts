@@ -36,6 +36,7 @@ export type Propery = {
   area: area;
   propertyType: string;
   amenities: string[];
+  createdAt:string;
 };
 
 export interface ProperyResArr {
