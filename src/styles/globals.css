@@ -223,3 +223,10 @@ p{
   color: white;
   border: none;
 }
+
+.error{
+  color: red;
+font-weight: bold;
+  text-align: center;
+  font-size: 13px;
+}

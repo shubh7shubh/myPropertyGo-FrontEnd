@@ -13,13 +13,14 @@ const MediumHouseCard = ({
   address,
   agentId,
   cost,
+  primaryImage,
 }: Propery) => {
   return (
     <Link href={`/details/${_id}`}>
       <div className="min-w-[300px] md:min-w-[400px] relative max-w-sm grow  rounded-lg   font-manrope">
         <div className="relative h-64 mb-4">
           <Image
-           src={propertyImages[0] ? propertyImages[0] : "/bighouse.png"}
+           src={primaryImage ? primaryImage : propertyImages[0] }
             fill
             alt="home"
             className="object-fill rounded-lg"

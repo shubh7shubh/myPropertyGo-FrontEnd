@@ -1017,12 +1017,12 @@ const AddProperty = () => {
               <label htmlFor="price">View/Facing</label>
 
               <select
-                style={{ width: "50%", margin: "10px", height: "30px" }}
+                style={{ width: "50%", margin: "10px 0", height: "45px",paddingLeft:"10px",borderRadius:"7px" }}
                 value={selectedViewFacing}
                 onChange={handleViewFacingChange}
               >
                 {viewFacingOptions.map((option) => (
-                  <option key={option} value={option}>
+                  <option style={{}} key={option} value={option}>
                     {option}
                   </option>
                 ))}
@@ -1108,6 +1108,7 @@ const AddProperty = () => {
               <div style={{ display: "flex", flexWrap: "wrap" }}>
                 {availableAmenities.map((amenity, index) => (
                   <div
+                  key={index}
                     style={{
                       margin: "5px",
                       display: "flex",
@@ -1117,6 +1118,7 @@ const AddProperty = () => {
                     className="amenitiesDiv"
                   >
                     <input
+                      key={index}
                       required
                       style={{
                         marginRight: "5px",

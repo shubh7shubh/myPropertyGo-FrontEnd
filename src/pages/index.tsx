@@ -23,6 +23,7 @@ import { ReactElement, useEffect, useRef } from "react";
 import { useState } from "react";
 import CardCarousel from "src/componets/Sliders/cardCaursel";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { area, location, response } from "src/@types";
 
 export const scrollLeft = (id: string) => {
   const ele = document.getElementById(id);
@@ -48,18 +49,19 @@ export default function Home() {
   const { data: featured } = useFetch<ProperyResArr>(
     "/property/getPropertiesByFeature"
   );
+  const { data: loc } = useFetch<response<location[]>>(
+    "/property/location/getAllLocation"
+  );
+
+  // {loc?.result.map((location) => {
+  //   console.log("Location Name:", location.name); 
+  // })}
+
+  // if (loc && loc.result && loc.result.length > 0) {
+  //   console.log(loc.result, "lllllllllllllllllll");
+  // }
 
 
-
-
-
-
-  // console.log(sortedArray);
-
-
-  // const sortedArray = data?.result.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-
-  // console.log(sortedArray);
 
   console.log(featured, "featured");
   const [Filtred, setFiltred] = useState<Propery[] | null>([]);
@@ -69,19 +71,12 @@ export default function Home() {
 
 
   useEffect(() => {
-    console.log(data?.result,"result")
+    console.log(data?.result, "result")
     if (data && data.result) {
-   setFiltred(data.result)
+      setFiltred(data.result)
     }
   }, [data]);
-  
 
-  // useEffect(() => {
-  //   if (data?.result) {
-  //     setFiltred(data?.result);
-  //     console.log(Filtred,"Filtreddddd")
-  //   }
-  // }, [data]);
 
   useEffect(() => {
     if (featured?.result) {
@@ -121,7 +116,7 @@ export default function Home() {
         </div>
         <Header />
       </div>
-      <section className=" py-10 px-10 w-full  mx-auto overflow-hidden bg-white">
+      {/* <section className=" py-10 px-10 w-full  mx-auto overflow-hidden bg-white">
         <div className="max-w-7xl mx-auto">
           <HomeSectionTitle text="Getting Started" />
           <div className="md:flex space-y-4 md:space-y-0 md:space-x-8 py-10 overflow-x-scroll">
@@ -130,7 +125,7 @@ export default function Home() {
             <CatagoryCard text="Pg & Co-living" img="/v.png" />
           </div>
         </div>
-      </section>
+      </section> */}
       <section className="pb-16 px-5 md:px-10 max-w-7xl mx-auto bg-[#F4F4F4] pt-12">
         <HomeSectionTitle text="Featured House" />
         <div className="relative ">
@@ -194,11 +189,15 @@ export default function Home() {
             color="text-white"
           />
           <div className="flex overflow-scroll space-x-6 scrollbar-hide py-10">
-            <PopularCity img={imgs["Rectangle 583(1)"]} />
+            {loc?.result.map((location) => (
+              <PopularCity key={location._id} img={location?.locationImages[0]} name = {location.name} />
+            ))}
+
+            {/* <PopularCity img={imgs["Rectangle 583(1)"]} />
             <PopularCity img={imgs["Rectangle 583(2)"]} />
             <PopularCity img={imgs["Rectangle 583(3)"]} />
             <PopularCity img={imgs["Rectangle 583(4)"]} />
-            <PopularCity img={imgs["Rectangle 583(5)"]} />
+            <PopularCity img={imgs["Rectangle 583(5)"]} /> */}
           </div>
         </div>
       </section>
@@ -235,6 +234,7 @@ export default function Home() {
           )}
         </div>
       </section>
+      {/* <h1>{loc?.[0].name}</h1> */}
       <Tour />
       <Stats />
       <Process />
